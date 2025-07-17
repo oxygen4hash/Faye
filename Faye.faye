@@ -1,0 +1,85 @@
+// Faye.faye - Язык программирования нового поколения
+core faye
+
+// 1. Базовые конструкции
+way start() {
+    console.show("Faye Language activated!")
+}
+
+// 2. Графический интерфейс
+give visual
+
+way create_window(title: text, width: num, height: num) {
+    frame = visual.Frame(title, width, height)
+    back frame
+}
+
+way add_button(frame: Frame, text: text, action: way) {
+    btn = visual.Button(text)
+    btn.on_click = action
+    frame.add(btn)
+}
+
+way add_slider(frame: Frame, min: num, max: num, value: num) {
+    slider = visual.Slider(min, max, value)
+    frame.add(slider)
+    back slider
+}
+
+// 3. Работа с графикой
+way draw_circle(frame: Frame, x: num, y: num, radius: num, color: text) {
+    canvas = frame.canvas
+    canvas.draw_circle(x, y, radius, color)
+}
+
+way draw_line(frame: Frame, x1: num, y1: num, x2: num, y2: num, width: num) {
+    canvas = frame.canvas
+    canvas.draw_line(x1, y1, x2, y2, width)
+}
+
+// 4. Компиляция программ
+way compile(source: text, target: text) {
+    result = system.run("faye_compiler.py", source, target)
+    when result.status {
+        0 => console.show("Compilation successful!")
+        _ => console.show("Error: " + result.output)
+    }
+}
+
+// 5. Системные операции
+way create_file(path: text, content: text) {
+    file = system.File(path)
+    file.write(content)
+}
+
+way run_executable(path: text) {
+    system.execute(path)
+}
+
+// 6. Математические функции
+way calculate {
+    way add(a: num, b: num) => a + b
+    way multiply(a: num, b: num) => a * b
+    way power(base: num, exp: num) => base ** exp
+}
+
+// 7. Работа с сетью
+way http_get(url: text) => network.request("GET", url)
+way http_post(url: text, data: text) => network.request("POST", url, data)
+
+// 8. Многопоточность
+flowing async_task(task: way) {
+    thread.create(task)
+}
+
+// 9. Работа с данными
+shape Database {
+    path: text
+    
+    way connect() => db.open(self.path)
+    way query(sql: text) => db.execute(sql)
+}
+
+// 10. Взаимодействие с ОС
+way get_os_info() => system.info()
+way get_time() => system.time()
